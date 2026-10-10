@@ -1,55 +1,63 @@
 """
-Common English Mistakes Fixer - Video Generator (9:16 Vertical Reel)
-"90% of Learners Make This Mistake! Stop Saying THIS, Say THAT!"
+ENGLISH MISTAKES CLINIC PODCAST - 16:9 FULL HD (1920x1080) VIDEO GENERATOR
+Format: 1920x1080 Landscape Studio Broadcast
+Dual Hosts (Emma & Andrew) breaking down common grammar and pronunciation mistakes, traps, and native corrections.
 """
-import os, sys, json, subprocess, random, requests, re, asyncio
+import os, sys, json, math, subprocess, random, requests, re, asyncio
 from pathlib import Path
 from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 from dotenv import load_dotenv
 import edge_tts
 
+if sys.platform == 'win32':
+    try: sys.stdout.reconfigure(encoding='utf-8')
+    except Exception: pass
+
 load_dotenv()
 
 BASE_DIR = Path(__file__).parent
+ASSETS_DIR = BASE_DIR / "assets"
 OUTPUT_DIR = BASE_DIR / "output"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-WIDTH = 1080
-HEIGHT = 1920
+VIDEO_WIDTH = 1920
+VIDEO_HEIGHT = 1080
 FPS = 30
 
-BG_DARK = (20, 16, 26)
-ALERT_RED = (239, 68, 68)
-SUCCESS_GREEN = (16, 185, 129)
-WARNING_YELLOW = (250, 204, 21)
+YELLOW = (255, 215, 0)
 WHITE = (255, 255, 255)
-CARD_BG = (32, 26, 42)
+MUTED_WHITE = (220, 225, 235)
+DARK_BG = (22, 14, 20)
+DARK_BAR = (38, 22, 32)
+ALERT_RED = (239, 68, 68)
+CHANNEL_NAME = "MISTAKES CLINIC PODCAST"
 
-VOICE_NATIVE = "en-US-AvaNeural"
+EMMA_VOICE = "en-US-AvaNeural"
+ANDREW_VOICE = "en-US-AndrewNeural"
+VOICE_RATE = "-15%"
 
-MISTAKES = [
+TOPICS = [
     {
-        "wrong": "I am agree with you.",
-        "right": "I agree with you.",
-        "rule": "'Agree' is already a verb, not an adjective! Never say 'I am agree'.",
-        "repeat": "Repeat after me: I AGREE with you. Perfect!",
-        "script": [
-            "Ninety percent of English learners make this mistake! Stop saying: I am agree with you.",
-            "Instead, always say: I AGREE with you! Agree is already an action verb, so you do not need 'am'.",
-            "Repeat after me: I agree with you. Perfect! Save this reel so you never make this mistake again!"
-        ]
+        "topic": "Why 'I Am Agree' Is Wrong and How To Say It Correctly",
+        "wrong": "I AM AGREE",
+        "right": "I AGREE WITH YOU",
+        "keyword": "AGREE",
+        "sub": "STOP CONFUSING VERBS AND ADJECTIVES"
     },
     {
-        "wrong": "I lost the bus this morning.",
-        "right": "I MISSED the bus this morning.",
-        "rule": "Use 'lose' for items you can't find (keys, wallet). Use 'miss' for transport (bus, train, flight)!",
-        "repeat": "Repeat after me: I MISSED the bus.",
-        "script": [
-            "Stop saying 'I lost the bus'! Unless the bus disappeared into thin air, that is incorrect.",
-            "You LOSE your keys or wallet, but for transportation, you always say: I MISSED the bus!",
-            "Repeat after me: I missed the bus! Follow for daily grammar fixes!"
-        ]
+        "topic": "Did You Lose or Miss The Bus? Transport Traps Explained",
+        "wrong": "I LOST THE BUS",
+        "right": "I MISSED THE BUS",
+        "keyword": "MISSED",
+        "sub": "LOSE VS MISS IN DAILY ENGLISH"
+    },
+    {
+        "topic": "Stop Saying 'I Have 25 Years'! Age Expressions in English",
+        "wrong": "I HAVE 25 YEARS",
+        "right": "I AM 25 YEARS OLD",
+        "keyword": "YEARS",
+        "sub": "STATING YOUR AGE NATURALLY"
     }
 ]
 
@@ -58,6 +66,7 @@ def load_font(size, bold=True):
         "C:/Windows/Fonts/arialbd.ttf",
         "C:/Windows/Fonts/arial.ttf",
         "C:/Windows/Fonts/segoeuib.ttf",
+        "C:/Windows/Fonts/trebucbd.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",
         "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf",
     ]
@@ -67,143 +76,263 @@ def load_font(size, bold=True):
             except: continue
     return ImageFont.load_default()
 
-def render_mistake_frame(item, step_idx, total_steps, out_path):
-    canvas = Image.new("RGBA", (WIDTH, HEIGHT), BG_DARK)
+def clean_text(text):
+    text = re.sub(r'\b(mm+|um+|uh+|ah+)\b', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+def generate_script_ai(topic_item, target_turns=6):
+    prompt = f"""Write {target_turns} turns of a slow, clear English podcast between Emma and Andrew.
+Topic: {topic_item['topic']}
+Mistake to avoid: {topic_item['wrong']}
+Correct native phrasing: {topic_item['right']}
+
+RULES:
+- Dialogue alternating between Host1 (Emma) and Host2 (Andrew)
+- Each turn MUST be 2-3 short, clear sentences (18-28 words)
+- Explain why non-native speakers make this mistake, why it sounds unnatural, and drill the correct phrasing
+- Wrap exactly 1 key learning word per turn in **asterisks**
+- Return as clean JSON array only:
+[{{"speaker":"Host1","text":"..."}},{{"speaker":"Host2","text":"..."}}]"""
+
+    key = os.getenv("POLLINATIONS_API_KEY")
+    if key:
+        try:
+            resp = requests.post("https://gen.pollinations.ai/v1/chat/completions", json={
+                "model": "gemini-fast",
+                "messages": [
+                    {"role": "system", "content": "You write educational, natural English mistakes and pronunciation clinic podcast dialogue. Wrap 1 key word per turn in **asterisks**."},
+                    {"role": "user", "content": prompt}
+                ],
+                "temperature": 0.8
+            }, headers={"Authorization": f"Bearer {key}"}, timeout=60)
+            if resp.status_code == 200:
+                raw = resp.json()["choices"][0]["message"]["content"].strip()
+                if "```json" in raw: raw = raw.split("```json")[1].split("```")[0].strip()
+                elif "```" in raw: raw = raw.split("```")[1].split("```")[0].strip()
+                script = json.loads(raw)
+                if isinstance(script, list) and len(script) > 0:
+                    for i, turn in enumerate(script):
+                        turn["speaker"] = "Host1" if i % 2 == 0 else "Host2"
+                        turn["text"] = clean_text(turn["text"])
+                        if "**" not in turn["text"]:
+                            words = turn["text"].split()
+                            if len(words) > 2:
+                                idx = len(words) // 2
+                                words[idx] = f"**{words[idx]}**"
+                                turn["text"] = " ".join(words)
+                    return script[:target_turns]
+        except Exception as e:
+            print(f"[script] AI note: {e}, using curated fallback.")
+
+    return [
+        {"speaker": "Host1", "text": f"Welcome back to the clinic! Today we are tackling a huge mistake: saying **{topic_item['wrong']}**."},
+        {"speaker": "Host2", "text": f"Many learners translate directly from their native language, but in English, you simply say **{topic_item['right']}**."},
+        {"speaker": "Host1", "text": f"That is because agree is an action verb on its own, so adding 'am' is grammatically **redundant**."},
+        {"speaker": "Host2", "text": f"Practice saying {topic_item['right']} five times today and you will never make that **mistake** again!"}
+    ][:target_turns]
+
+async def generate_audio_files(turns, run_dir):
+    audio_dir = run_dir / "audio"
+    audio_dir.mkdir(parents=True, exist_ok=True)
+    audio_list = []
+    for i, turn in enumerate(turns):
+        mp3_p = audio_dir / f"turn_{i:03d}.mp3"
+        spoken = re.sub(r'\*\*(.*?)\*\*', r'\1', turn["text"])
+        voice = EMMA_VOICE if turn["speaker"] == "Host1" else ANDREW_VOICE
+        comm = edge_tts.Communicate(spoken, voice, rate=VOICE_RATE)
+        await comm.save(str(mp3_p))
+
+        try:
+            r = subprocess.run(
+                ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                 "-of", "default=noprint_wrappers=1:nokey=1", str(mp3_p)],
+                capture_output=True, text=True, check=True
+            )
+            duration = float(r.stdout.strip())
+        except:
+            duration = 5.0
+        audio_list.append({"path": str(mp3_p), "duration": duration, "speaker": turn["speaker"]})
+    return audio_list
+
+def draw_equalizer_waves(draw, start_x, start_y, frame_idx=0):
+    num_bars = 8
+    bar_w = 5
+    gap = 6
+    for i in range(num_bars):
+        h = int(16 + 14 * abs(math.sin(frame_idx * 0.5 + i * 1.2)))
+        x = start_x + i * (bar_w + gap)
+        y_top = start_y - h // 2
+        y_bot = start_y + h // 2
+        draw.rounded_rectangle([(x, y_top), (x + bar_w, y_bot)], radius=2, fill=YELLOW)
+
+def render_podcast_frame(topic_item, turn, idx, total_turns, elapsed, total_dur, out_path):
+    woman_path = ASSETS_DIR / "woman_base.png"
+    if woman_path.exists():
+        canvas = Image.open(woman_path).convert("RGBA").resize((VIDEO_WIDTH, VIDEO_HEIGHT), Image.Resampling.LANCZOS)
+    else:
+        canvas = Image.new("RGBA", (VIDEO_WIDTH, VIDEO_HEIGHT), DARK_BG)
+        gdraw = ImageDraw.Draw(canvas)
+        for y in range(VIDEO_HEIGHT):
+            shade = int(16 + (y / VIDEO_HEIGHT) * 18)
+            gdraw.line([(0, y), (VIDEO_WIDTH, y)], fill=(shade + 6, shade, shade + 4, 255))
+
     draw = ImageDraw.Draw(canvas)
 
-    # Gradient background
-    for y in range(HEIGHT):
-        ratio = y / HEIGHT
-        r = int(20 + ratio * 15)
-        g = int(16 + ratio * 10)
-        b = int(26 + ratio * 25)
-        draw.line([(0, y), (WIDTH, y)], fill=(r, g, b, 255))
+    # 1. Top Left Channel Badge
+    font_tab = load_font(30, bold=True)
+    draw.rounded_rectangle([(60, 40), (610, 110)], radius=18, fill=DARK_BAR, outline=YELLOW, width=3)
+    draw_equalizer_waves(draw, 90, 75, frame_idx=idx)
+    draw.text((190, 75), CHANNEL_NAME, fill=WHITE, font=font_tab, anchor="lm")
 
-    # Top Alert Badge
-    draw.rounded_rectangle([(70, 90), (WIDTH - 70, 180)], radius=22, fill=(45, 20, 25), outline=ALERT_RED, width=3)
-    f_hdr = load_font(32, bold=True)
-    draw.text((WIDTH // 2, 135), "⚠️ COMMON ENGLISH MISTAKE ALERT", fill=WARNING_YELLOW, font=f_hdr, anchor="mm")
+    # 2. Top Center Mistake Fix Pill
+    draw.rounded_rectangle([(650, 40), (1480, 110)], radius=18, fill=(45, 20, 28), outline=ALERT_RED, width=2)
+    f_topic = load_font(26, bold=True)
+    draw.text((1065, 75), f"⚠️ FIX: {topic_item['wrong']} ➔ {topic_item['right']}", fill=YELLOW, font=f_topic, anchor="mm")
 
-    # Main Headline Hook
-    f_hook = load_font(52, bold=True)
-    draw.text((WIDTH // 2, 260), "STOP SAYING THIS!", fill=WHITE, font=f_hook, anchor="mm")
+    # 3. Top Right Speaker Badge
+    speaker_name = "EMMA" if turn["speaker"] == "Host1" else "ANDREW"
+    font_spk = load_font(28, bold=True)
+    draw.rounded_rectangle([(1520, 40), (1860, 110)], radius=18, fill=DARK_BAR, outline=YELLOW, width=3)
+    draw.text((1690, 75), f"🎙️ HOST: {speaker_name}", fill=YELLOW, font=font_spk, anchor="mm")
 
-    # 1. WRONG CARD (Red)
-    draw.rounded_rectangle([(70, 330), (WIDTH - 70, 580)], radius=28, fill=(45, 18, 25), outline=ALERT_RED, width=4)
-    f_tag = load_font(26, bold=True)
-    draw.rounded_rectangle([(110, 355), (380, 405)], radius=12, fill=ALERT_RED)
-    draw.text((245, 380), "❌ INCORRECT", fill=WHITE, font=f_tag, anchor="mm")
+    # 4. Center Podcast Dialogue Text Display
+    text = turn["text"]
+    parts = re.split(r'(\*\*.*?\*\*)', text)
+    words_list = []
+    for p in parts:
+        if p.startswith('**') and p.endswith('**'):
+            words_list.append((p[2:-2], True))
+        elif p:
+            for w in p.split(' '):
+                if w: words_list.append((w, False))
 
-    f_wrong = load_font(55, bold=True)
-    draw.text((WIDTH // 2, 480), f'"{item["wrong"]}"', fill=(255, 180, 180), font=f_wrong, anchor="mm")
+    text_left = 780
+    text_right = 1820
+    max_w = text_right - text_left
+    center_x = (text_left + text_right) // 2
 
-    # Arrow Down
-    f_arrow = load_font(46, bold=True)
-    draw.text((WIDTH // 2, 640), "⬇️ SAY THIS INSTEAD ⬇️", fill=WARNING_YELLOW, font=f_arrow, anchor="mm")
+    font_size = 85
+    lines = None
+    while font_size >= 45:
+        curr_font = load_font(font_size, bold=True)
+        curr_lines = []
+        curr_line = []
+        curr_w = 0
+        for word, is_y in words_list:
+            wb = draw.textbbox((0, 0), word, font=curr_font)
+            wl = wb[2] - wb[0] + 12
+            if curr_w + wl > max_w and curr_line:
+                curr_lines.append((curr_line, curr_w))
+                curr_line = [(word, is_y, wl)]
+                curr_w = wl
+            else:
+                curr_line.append((word, is_y, wl))
+                curr_w += wl
+        if curr_line:
+            curr_lines.append((curr_line, curr_w))
+        if len(curr_lines) <= 3 and all(w <= max_w for _, w in curr_lines):
+            lines = curr_lines
+            main_font = curr_font
+            break
+        font_size -= 5
 
-    # 2. CORRECT CARD (Green)
-    draw.rounded_rectangle([(70, 710), (WIDTH - 70, 990)], radius=28, fill=(15, 45, 35), outline=SUCCESS_GREEN, width=5)
-    draw.rounded_rectangle([(110, 735), (420, 785)], radius=12, fill=SUCCESS_GREEN)
-    draw.text((265, 760), "✅ 100% CORRECT", fill=WHITE, font=f_tag, anchor="mm")
+    if lines is None:
+        main_font = load_font(45, bold=True)
+        lines = curr_lines
 
-    f_right = load_font(68, bold=True)
-    draw.text((WIDTH // 2, 870), f'"{item["right"]}"', fill=WHITE, font=f_right, anchor="mm")
+    line_h = int(font_size * 1.35)
+    total_h = len(lines) * line_h
+    start_y = 520 - total_h // 2
 
-    # 3. THE GOLDEN RULE CARD
-    draw.rounded_rectangle([(70, 1060), (WIDTH - 70, 1380)], radius=28, fill=CARD_BG, outline=WARNING_YELLOW, width=3)
-    f_rule_lbl = load_font(30, bold=True)
-    draw.text((110, 1105), "💡 WHY? THE GRAMMAR RULE:", fill=WARNING_YELLOW, font=f_rule_lbl, anchor="lm")
+    shadow_img = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
+    sdraw = ImageDraw.Draw(shadow_img)
+    for l_idx, (line_words, line_w) in enumerate(lines):
+        cx = center_x - line_w // 2
+        cy = start_y + l_idx * line_h
+        for word, _, wl in line_words:
+            sdraw.text((cx + 4, cy + 4), word, fill=(0, 0, 0, 230), font=main_font)
+            cx += wl
+    shadow_img = shadow_img.filter(ImageFilter.GaussianBlur(5))
+    canvas.paste(shadow_img, (0, 0), shadow_img)
 
-    f_rule_txt = load_font(38, bold=False)
-    rwords = item["rule"].split()
-    rlines = []
-    cr = []
-    for rw in rwords:
-        tb = draw.textbbox((0, 0), " ".join(cr + [rw]), font=f_rule_txt)
-        if tb[2] - tb[0] > (WIDTH - 240):
-            rlines.append(" ".join(cr))
-            cr = [rw]
-        else:
-            cr = [rw]
-    if cr: rlines.append(" ".join(cr))
-    for rl_idx, rl in enumerate(rlines):
-        draw.text((110, 1175 + rl_idx * 55), rl, fill=WHITE, font=f_rule_txt, anchor="lm")
+    draw = ImageDraw.Draw(canvas)
+    for l_idx, (line_words, line_w) in enumerate(lines):
+        cx = center_x - line_w // 2
+        cy = start_y + l_idx * line_h
+        for word, is_y, wl in line_words:
+            color = YELLOW if is_y else WHITE
+            draw.text((cx, cy), word, fill=color, font=main_font)
+            cx += wl
 
-    # 4. PRONUNCIATION / REPEAT CARD
-    draw.rounded_rectangle([(70, 1440), (WIDTH - 70, 1690)], radius=25, fill=(25, 35, 60), outline=(59, 130, 246), width=3)
-    f_rep_lbl = load_font(28, bold=True)
-    draw.text((110, 1485), "🗣️ SPEAKING & PRONUNCIATION PRACTICE:", fill=(96, 165, 250), font=f_rep_lbl, anchor="lm")
-    f_rep_txt = load_font(42, bold=True)
-    draw.text((WIDTH // 2, 1585), item["repeat"], fill=WARNING_YELLOW, font=f_rep_txt, anchor="mm")
+    # 5. Bottom Progress Bar & Branding
+    draw.line([(0, 1020), (VIDEO_WIDTH, 1020)], fill=(45, 30, 40), width=3)
+    ratio = min(1.0, elapsed / max(1.0, total_dur))
+    draw.line([(0, 1020), (int(VIDEO_WIDTH * ratio), 1020)], fill=YELLOW, width=6)
 
-    # Footer
-    f_cta = load_font(32, bold=True)
-    draw.text((WIDTH // 2, 1780), "❤️ Double tap & Save so you never forget!", fill=WARNING_YELLOW, font=f_cta, anchor="mm")
-    f_sub = load_font(26, bold=False)
-    draw.text((WIDTH // 2, 1835), "Follow Common Mistakes Fixer for daily tips!", fill=(156, 163, 175), font=f_sub, anchor="mm")
+    font_sub = load_font(26, bold=False)
+    draw.text((70, 1050), "Common English Mistakes Clinic • Speak Accurately • Fix Bad Habits", fill=MUTED_WHITE, font=font_sub, anchor="lm")
+    time_str = f"{int(elapsed // 60):02d}:{int(elapsed % 60):02d} / {int(total_dur // 60):02d}:{int(total_dur % 60):02d}"
+    draw.text((1850, 1050), time_str, fill=YELLOW, font=font_sub, anchor="rm")
 
-    canvas.convert("RGB").save(out_path, quality=95)
+    canvas.convert("RGB").save(out_path, quality=92)
 
-async def assemble_mistake_reel(item, run_dir):
+def assemble_video(topic_item, turns, audio_list, run_dir):
     frames_dir = run_dir / "frames"
     clips_dir = run_dir / "clips"
-    audio_dir = run_dir / "audio"
-    for d in [frames_dir, clips_dir, audio_dir]:
-        d.mkdir(parents=True, exist_ok=True)
+    frames_dir.mkdir(parents=True, exist_ok=True)
+    clips_dir.mkdir(parents=True, exist_ok=True)
 
+    total_dur = sum(a["duration"] for a in audio_list)
+    elapsed = 0.0
     clips = []
-    total_steps = len(item["script"])
 
-    for s_idx, text in enumerate(item["script"]):
-        mp3_p = audio_dir / f"step_{s_idx}.mp3"
-        await edge_tts.Communicate(text, VOICE_NATIVE, rate="-10%").save(str(mp3_p))
+    for i, (turn, audio) in enumerate(zip(turns, audio_list)):
+        img_p = frames_dir / f"frame_{i:03d}.png"
+        clip_p = clips_dir / f"clip_{i:03d}.mp4"
 
-        r = subprocess.run(
-            ["ffprobe", "-v", "error", "-show_entries", "format=duration",
-             "-of", "default=noprint_wrappers=1:nokey=1", str(mp3_p)],
-            capture_output=True, text=True, check=True
-        )
-        dur = float(r.stdout.strip())
+        render_podcast_frame(topic_item, turn, i, len(turns), elapsed, total_dur, str(img_p))
 
-        frame_p = frames_dir / f"frame_{s_idx}.png"
-        render_mistake_frame(item, s_idx, total_steps, str(frame_p))
-
-        clip_p = clips_dir / f"clip_{s_idx}.mp4"
+        dur_str = f"{audio['duration']:.3f}"
         subprocess.run([
-            "ffmpeg", "-y", "-loop", "1", "-i", str(frame_p), "-i", str(mp3_p),
-            "-vf", f"scale={WIDTH}:{HEIGHT},fps={FPS}",
+            "ffmpeg", "-y", "-loop", "1", "-i", str(img_p), "-i", audio["path"],
+            "-vf", f"scale={VIDEO_WIDTH}:{VIDEO_HEIGHT},fps={FPS}",
             "-c:v", "libx264", "-c:a", "aac", "-b:a", "192k",
-            "-pix_fmt", "yuv420p", "-preset", "fast", "-t", f"{dur:.3f}", str(clip_p)
+            "-pix_fmt", "yuv420p", "-preset", "fast", "-t", dur_str, str(clip_p)
         ], check=True, capture_output=True)
 
         clips.append(clip_p)
+        elapsed += audio["duration"]
 
     concat_txt = run_dir / "concat.txt"
     with open(concat_txt, "w") as f:
         for c in clips:
             f.write(f"file '{c.resolve().as_posix()}'\n")
 
-    final_v = run_dir / "common_mistakes_reel.mp4"
-    subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(concat_txt), "-c", "copy", str(final_v)], check=True, capture_output=True)
-    return final_v
+    final_video = run_dir / "mistakes_clinic_podcast_final.mp4"
+    subprocess.run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(concat_txt), "-c", "copy", str(final_video)], check=True, capture_output=True)
+    return final_video, total_dur
 
-async def run_mistakes_generation(idx=0):
-    item = MISTAKES[idx % len(MISTAKES)]
+async def run_mistakes_generation(topic_idx=0, turns_count=4):
+    topic_item = TOPICS[topic_idx % len(TOPICS)]
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     run_dir = OUTPUT_DIR / f"run_{ts}"
     run_dir.mkdir(parents=True, exist_ok=True)
 
-    print(f"[Common Mistakes] Generating Reel for: '{item['wrong']}' -> '{item['right']}'...")
-    final_v = await assemble_mistake_reel(item, run_dir)
+    print(f"[Mistakes Podcast] Generating 16:9 Podcast: '{topic_item['topic']}' ({turns_count} turns)...")
+    turns = generate_script_ai(topic_item, target_turns=turns_count)
+    audio_list = await generate_audio_files(turns, run_dir)
+    video_p, dur = assemble_video(topic_item, turns, audio_list, run_dir)
 
     meta = {
-        "title": f"Stop saying '{item['wrong']}'! ⚠️ Say '{item['right']}' instead!",
-        "description": f"90% of English learners make this mistake! Learn why '{item['wrong']}' is incorrect and how to say '{item['right']}'. Rule: {item['rule']} Follow for daily fixes! 🌟",
-        "wrong": item["wrong"],
-        "right": item["right"]
+        "title": f"Stop Saying {topic_item['wrong']}! Say {topic_item['right']} 🎙️ Mistakes Clinic Podcast",
+        "description": f"Learn why '{topic_item['wrong']}' is incorrect and how to say '{topic_item['right']}' naturally! Join Emma & Andrew in this slow English podcast episode. ⚠️📚",
+        "wrong": topic_item["wrong"],
+        "right": topic_item["right"],
+        "duration_seconds": dur
     }
     with open(run_dir / "metadata.json", "w", encoding="utf-8") as f:
         json.dump(meta, f, indent=2)
 
-    print(f"[Common Mistakes] Video ready: {final_v}")
-    return final_v, meta
+    print(f"[Mistakes Podcast] Video ready: {video_p}")
+    return video_p, meta
