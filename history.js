@@ -1,4 +1,14 @@
 // Daily Video History Log & Topic Registry
-const PODCAST_HISTORY = [];
+const PODCAST_HISTORY = [
+  {
+    "episode": 1,
+    "topic": "The 'It's Like...' Trap: Mastering Similes for Smoother Comparisons",
+    "date": "2026-10-16T03:46:22.027883",
+    "duration_sec": 1249.58,
+    "duration_min": 20.83,
+    "video_file": "podcast_ep1_20261016_032746.mp4",
+    "platform": "Facebook"
+  }
+];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
 if (typeof window !== 'undefined') { window.PODCAST_HISTORY = PODCAST_HISTORY; }
