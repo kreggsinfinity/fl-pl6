@@ -8,6 +8,15 @@ const PODCAST_HISTORY = [
     "duration_min": 20.83,
     "video_file": "podcast_ep1_20261016_032746.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 2,
+    "topic": "The 'So...' Spiral: Escaping Repetitive Speech and Sounding More Natural",
+    "date": "2026-10-16T12:28:22.220767",
+    "duration_sec": 1301.88,
+    "duration_min": 21.7,
+    "video_file": "podcast_ep2_20261016_121438.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
