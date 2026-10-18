@@ -26,6 +26,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.79,
     "video_file": "podcast_ep3_20261017_113149.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 4,
+    "topic": "Beyond 'Very': Supercharging Your Adjectives for Impactful English",
+    "date": "2026-10-18T12:15:19.389237",
+    "duration_sec": 1285.97,
+    "duration_min": 21.43,
+    "video_file": "podcast_ep4_20261018_120105.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
