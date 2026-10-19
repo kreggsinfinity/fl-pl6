@@ -35,6 +35,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.43,
     "video_file": "podcast_ep4_20261018_120105.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 5,
+    "topic": "From 'Actually...' to Authentic: Charming Your Way Through Conversations",
+    "date": "2026-10-19T14:48:31.866137",
+    "duration_sec": 1324.92,
+    "duration_min": 22.08,
+    "video_file": "podcast_ep5_20261019_143333.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
