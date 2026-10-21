@@ -52,5 +52,14 @@
     "duration_min": 20.43,
     "video_file": "podcast_ep6_20261020_123934.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 7,
+    "topic": "The 'Um...' Abyss: Conquering Hesitation and Sounding Like a Native Speaker",
+    "date": "2026-10-21T13:11:04.703862",
+    "duration_sec": 1181.47,
+    "duration_min": 19.69,
+    "video_file": "podcast_ep7_20261021_125143.mp4",
+    "platform": "Facebook"
   }
 ]
