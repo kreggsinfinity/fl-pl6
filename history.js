@@ -62,6 +62,15 @@ const PODCAST_HISTORY = [
     "duration_min": 19.69,
     "video_file": "podcast_ep7_20261021_125143.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 8,
+    "topic": "The 'Have To' Hangover: Breaking Free from Obligation and Sounding More Expressive",
+    "date": "2026-10-22T13:12:58.642613",
+    "duration_sec": 1207.46,
+    "duration_min": 20.12,
+    "video_file": "podcast_ep8_20261022_125414.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
