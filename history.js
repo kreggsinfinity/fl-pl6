@@ -71,6 +71,15 @@ const PODCAST_HISTORY = [
     "duration_min": 20.12,
     "video_file": "podcast_ep8_20261022_125414.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 9,
+    "topic": "The 'Just' Jam: How to Sound Less Apologetic and More Assertive",
+    "date": "2026-10-23T13:14:17.091726",
+    "duration_sec": 1260.43,
+    "duration_min": 21.01,
+    "video_file": "podcast_ep9_20261023_125434.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
