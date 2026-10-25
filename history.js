@@ -89,6 +89,15 @@ const PODCAST_HISTORY = [
     "duration_min": 20.7,
     "video_file": "podcast_ep10_20261024_115615.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 11,
+    "topic": "The 'Could You?' Conundrum: From Polite Requests to Powerful Influence",
+    "date": "2026-10-25T12:56:04.242168",
+    "duration_sec": 1307.52,
+    "duration_min": 21.79,
+    "video_file": "podcast_ep11_20261025_122821.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
