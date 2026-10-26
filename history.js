@@ -98,6 +98,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.79,
     "video_file": "podcast_ep11_20261025_122821.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 12,
+    "topic": "The 'Like, Totally!' Loophole: Escaping Overused Fillers and Sounding Effortlessly Cool",
+    "date": "2026-10-26T14:35:15.935476",
+    "duration_sec": 1323.29,
+    "duration_min": 22.05,
+    "video_file": "podcast_ep12_20261026_140530.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
