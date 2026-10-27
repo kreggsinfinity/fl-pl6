@@ -107,6 +107,15 @@ const PODCAST_HISTORY = [
     "duration_min": 22.05,
     "video_file": "podcast_ep12_20261026_140530.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 13,
+    "topic": "The 'Go' Get-Up: Unlocking 10 Dynamic Verbs to Replace Generic 'Go' Sentences",
+    "date": "2026-10-27T13:33:52.312887",
+    "duration_sec": 1405.63,
+    "duration_min": 23.43,
+    "video_file": "podcast_ep13_20261027_130626.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
