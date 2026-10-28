@@ -116,6 +116,15 @@ const PODCAST_HISTORY = [
     "duration_min": 23.43,
     "video_file": "podcast_ep13_20261027_130626.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 14,
+    "topic": "The 'I Think That...' Tangle: Unraveling Tentative Talk for Clearer Confidence",
+    "date": "2026-10-28T14:24:06.546296",
+    "duration_sec": 1329.0,
+    "duration_min": 22.15,
+    "video_file": "podcast_ep14_20261028_135708.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
