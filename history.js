@@ -134,6 +134,15 @@ const PODCAST_HISTORY = [
     "duration_min": 22.85,
     "video_file": "podcast_ep15_20261029_140435.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 16,
+    "topic": "False Friends: Words That Don't Mean What You Think",
+    "date": "2026-10-30T14:13:10.559591",
+    "duration_sec": 1372.99,
+    "duration_min": 22.88,
+    "video_file": "podcast_ep16_20261030_135731.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
