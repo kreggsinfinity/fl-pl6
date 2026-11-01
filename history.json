@@ -151,5 +151,14 @@
     "duration_min": 21.62,
     "video_file": "podcast_ep17_20261031_133110.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 18,
+    "topic": "The 'You Know?' Nuisance: Ditching This Filler for Effortless Flow",
+    "date": "2026-11-01T14:24:47.896168",
+    "duration_sec": 1242.29,
+    "duration_min": 20.7,
+    "video_file": "podcast_ep18_20261101_141224.mp4",
+    "platform": "Facebook"
   }
 ]
