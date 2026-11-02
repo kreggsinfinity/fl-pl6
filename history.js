@@ -161,6 +161,15 @@ const PODCAST_HISTORY = [
     "duration_min": 20.7,
     "video_file": "podcast_ep18_20261101_141224.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 19,
+    "topic": "The 'I Feel Like...' Fad: Expressing Emotions Without Sounding Unsure",
+    "date": "2026-11-02T17:13:46.014167",
+    "duration_sec": 1309.37,
+    "duration_min": 21.82,
+    "video_file": "podcast_ep19_20261102_165808.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
