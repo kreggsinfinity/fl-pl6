@@ -170,6 +170,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.82,
     "video_file": "podcast_ep19_20261102_165808.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 20,
+    "topic": "The 'Actually...' Avalanche: Taming Tentative Talk for True Confidence",
+    "date": "2026-11-03T15:16:42.055743",
+    "duration_sec": 1263.1,
+    "duration_min": 21.05,
+    "video_file": "podcast_ep20_20261103_145817.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
