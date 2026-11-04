@@ -179,6 +179,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.05,
     "video_file": "podcast_ep20_20261103_145817.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 21,
+    "topic": "Beyond 'Sorry': Mastering Graceful Apologies and Positive Rephrasing",
+    "date": "2026-11-04T15:37:46.664939",
+    "duration_sec": 1349.4,
+    "duration_min": 22.49,
+    "video_file": "podcast_ep21_20261104_151848.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
