@@ -197,6 +197,15 @@ const PODCAST_HISTORY = [
     "duration_min": 20.76,
     "video_file": "podcast_ep22_20261105_152028.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 23,
+    "topic": "The 'It's a Bit...' Blurring: Finding Your Voice Beyond Vague Descriptions",
+    "date": "2026-11-06T15:10:24.014781",
+    "duration_sec": 1287.45,
+    "duration_min": 21.46,
+    "video_file": "podcast_ep23_20261106_145515.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
