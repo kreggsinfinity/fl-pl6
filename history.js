@@ -206,6 +206,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.46,
     "video_file": "podcast_ep23_20261106_145515.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 24,
+    "topic": "The 'Well...' Wonderland: Escaping Hesitation and Finding Your Fluent Voice",
+    "date": "2026-11-07T14:11:44.523974",
+    "duration_sec": 1343.23,
+    "duration_min": 22.39,
+    "video_file": "podcast_ep24_20261107_135150.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
