@@ -215,6 +215,15 @@ const PODCAST_HISTORY = [
     "duration_min": 22.39,
     "video_file": "podcast_ep24_20261107_135150.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 25,
+    "topic": "The 'It Is What It Is' Illusion: Saying More Than Nothing for Genuine Connection",
+    "date": "2026-11-08T14:29:15.511223",
+    "duration_sec": 1329.89,
+    "duration_min": 22.16,
+    "video_file": "podcast_ep25_20261108_141303.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
