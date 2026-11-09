@@ -224,6 +224,15 @@ const PODCAST_HISTORY = [
     "duration_min": 22.16,
     "video_file": "podcast_ep25_20261108_141303.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 26,
+    "topic": "The 'Literally' Labyrinth: Navigating Hyperbole Without Losing Credibility",
+    "date": "2026-11-09T17:40:45.551723",
+    "duration_sec": 1267.73,
+    "duration_min": 21.13,
+    "video_file": "podcast_ep26_20261109_172201.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
