@@ -233,6 +233,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.13,
     "video_file": "podcast_ep26_20261109_172201.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 27,
+    "topic": "The 'This Is What I Mean...' Maze: Unlocking Clarity When Words Fail You",
+    "date": "2026-11-10T15:45:50.570921",
+    "duration_sec": 1218.43,
+    "duration_min": 20.31,
+    "video_file": "podcast_ep27_20261110_153039.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
