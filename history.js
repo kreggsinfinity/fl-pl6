@@ -242,6 +242,15 @@ const PODCAST_HISTORY = [
     "duration_min": 20.31,
     "video_file": "podcast_ep27_20261110_153039.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 28,
+    "topic": "The 'Like' Labyrinth: Escaping the Filler and Finding Your Authentic Voice",
+    "date": "2026-11-12T16:14:26.967940",
+    "duration_sec": 1268.13,
+    "duration_min": 21.14,
+    "video_file": "podcast_ep28_20261112_155518.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
