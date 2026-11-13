@@ -250,5 +250,14 @@
     "duration_min": 21.14,
     "video_file": "podcast_ep28_20261112_155518.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 29,
+    "topic": "The 'For Example' Fumble: Beyond Basic Illustrations to Compelling Clarity",
+    "date": "2026-11-13T15:32:08.647846",
+    "duration_sec": 1307.09,
+    "duration_min": 21.78,
+    "video_file": "podcast_ep29_20261113_151624.mp4",
+    "platform": "Facebook"
   }
 ]
