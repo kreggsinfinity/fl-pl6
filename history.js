@@ -260,6 +260,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.78,
     "video_file": "podcast_ep29_20261113_151624.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 30,
+    "topic": "The 'Could Have, Should Have, Would Have' Hangover: Mastering Past Regrets with Confidence",
+    "date": "2026-11-14T14:14:21.996404",
+    "duration_sec": 1191.1,
+    "duration_min": 19.85,
+    "video_file": "podcast_ep30_20261114_140310.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
