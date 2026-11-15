@@ -269,6 +269,15 @@ const PODCAST_HISTORY = [
     "duration_min": 19.85,
     "video_file": "podcast_ep30_20261114_140310.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 31,
+    "topic": "The 'I Guess...' Ghost: Stop Sounding Undecided and Embrace Your Voice",
+    "date": "2026-11-15T14:53:21.912705",
+    "duration_sec": 1250.54,
+    "duration_min": 20.84,
+    "video_file": "podcast_ep31_20261115_143849.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
