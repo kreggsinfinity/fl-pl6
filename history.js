@@ -287,6 +287,15 @@ const PODCAST_HISTORY = [
     "duration_min": 22.23,
     "video_file": "podcast_ep32_20261116_165454.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 33,
+    "topic": "The 'To Be Honest...' Trap: Ditch the Disclaimer, Speak with True Confidence",
+    "date": "2026-11-17T17:01:44.411189",
+    "duration_sec": 1254.43,
+    "duration_min": 20.91,
+    "video_file": "podcast_ep33_20261117_164921.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
