@@ -305,6 +305,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.41,
     "video_file": "podcast_ep34_20261118_162047.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 35,
+    "topic": "The 'Sort Of' Shuffle: Stepping Out of Ambiguity into Clarity",
+    "date": "2026-11-19T16:42:02.663631",
+    "duration_sec": 1226.93,
+    "duration_min": 20.45,
+    "video_file": "podcast_ep35_20261119_162922.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
