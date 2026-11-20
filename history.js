@@ -314,6 +314,15 @@ const PODCAST_HISTORY = [
     "duration_min": 20.45,
     "video_file": "podcast_ep35_20261119_162922.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 36,
+    "topic": "The 'Basically' Black Hole: Escaping Vague Talk for Vibrant Verbiage",
+    "date": "2026-11-20T16:22:05.393134",
+    "duration_sec": 1347.07,
+    "duration_min": 22.45,
+    "video_file": "podcast_ep36_20261120_160117.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
