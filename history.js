@@ -323,6 +323,15 @@ const PODCAST_HISTORY = [
     "duration_min": 22.45,
     "video_file": "podcast_ep36_20261120_160117.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 37,
+    "topic": "The 'So...' Syndrome: From Filler to Fluent Flow",
+    "date": "2026-11-21T15:33:22.455844",
+    "duration_sec": 1270.85,
+    "duration_min": 21.18,
+    "video_file": "podcast_ep37_20261121_151443.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
