@@ -332,6 +332,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.18,
     "video_file": "podcast_ep37_20261121_151443.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 38,
+    "topic": "The 'Should Of' Slip-Up: Mastering Past Possibilities & Moving Forward with Confidence",
+    "date": "2026-11-22T15:29:50.885530",
+    "duration_sec": 1267.41,
+    "duration_min": 21.12,
+    "video_file": "podcast_ep38_20261122_151153.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
