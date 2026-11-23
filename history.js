@@ -341,6 +341,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.12,
     "video_file": "podcast_ep38_20261122_151153.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 39,
+    "topic": "The 'Just' and 'Only' Jumble: Sounding More Confident, Less Apologetic",
+    "date": "2026-11-23T19:27:12.875137",
+    "duration_sec": 1229.02,
+    "duration_min": 20.48,
+    "video_file": "podcast_ep39_20261123_190914.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
