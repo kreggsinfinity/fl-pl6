@@ -350,6 +350,15 @@ const PODCAST_HISTORY = [
     "duration_min": 20.48,
     "video_file": "podcast_ep39_20261123_190914.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 40,
+    "topic": "Saying 'I am fine, thank you' Like a Robot",
+    "date": "2026-11-24T19:04:28.960146",
+    "duration_sec": 1204.7,
+    "duration_min": 20.08,
+    "video_file": "podcast_ep40_20261124_184725.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
