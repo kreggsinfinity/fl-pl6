@@ -368,6 +368,15 @@ const PODCAST_HISTORY = [
     "duration_min": 20.38,
     "video_file": "podcast_ep41_20261125_175422.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 42,
+    "topic": "The 'Actually, I Mean...' Avalanche: From Awkward Rephrasing to Elegant Eloquence",
+    "date": "2026-11-26T17:55:25.453036",
+    "duration_sec": 1272.38,
+    "duration_min": 21.21,
+    "video_file": "podcast_ep42_20261126_173912.mp4",
+    "platform": "Facebook"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
