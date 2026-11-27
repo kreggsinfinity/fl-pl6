@@ -376,5 +376,14 @@
     "duration_min": 21.21,
     "video_file": "podcast_ep42_20261126_173912.mp4",
     "platform": "Facebook"
+  },
+  {
+    "episode": 43,
+    "topic": "The 'Ask Me If I Care' Attitude: Saying 'No' Without Burning Bridges",
+    "date": "2026-11-27T17:37:44.800378",
+    "duration_sec": 1317.17,
+    "duration_min": 21.95,
+    "video_file": "podcast_ep43_20261127_172237.mp4",
+    "platform": "None"
   }
 ]
