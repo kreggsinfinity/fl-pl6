@@ -386,6 +386,15 @@ const PODCAST_HISTORY = [
     "duration_min": 21.95,
     "video_file": "podcast_ep43_20261127_172237.mp4",
     "platform": "None"
+  },
+  {
+    "episode": 44,
+    "topic": "The 'Can I Borrow?' Conundrum: Asking for Favors Smoothly & Politely",
+    "date": "2026-11-28T16:19:33.264608",
+    "duration_sec": 1253.42,
+    "duration_min": 20.89,
+    "video_file": "podcast_ep44_20261128_160537.mp4",
+    "platform": "None"
   }
 ];
 if (typeof module !== 'undefined' && module.exports) { module.exports = PODCAST_HISTORY; }
